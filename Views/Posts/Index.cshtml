@@ -1,0 +1,77 @@
+﻿@model IEnumerable<donatETH.Models.Post>
+
+
+<h1>Donate NOW</h1>
+
+<form method="post" asp-controller="Posts" asp-action="Create">
+    <input type="submit" value="Create charity donation" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentSum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikeCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentSum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LikeCount)
+                </td>
+                <td>
+                    <script>
+                        function SaveLike (index, id)
+                        {
+                            if(localStorage.getItem("likedpost_"+id)==null){
+                                localStorage.setItem("likedpost_"+id, 1)
+                            }
+                            else if(localStorage.getItem("likedpost_"+id)==1){
+                                localStorage.setItem("likedpost_"+id, 0)
+                            }
+                            else if(localStorage.getItem("likedpost_"+id)==0){
+                                localStorage.setItem("likedpost_"+id, 1)
+                            }
+                            $.ajax({
+                                url: '/Posts/Like',
+                                type: 'POST',
+                                data: { index: index, liked: localStorage.getItem("likedpost_"+id) },
+                                success: function (result) {}
+                                });
+                        }
+                    </script>
+
+                    <button onClick="SaveLike(@item.Index, @item.Id)">Like</button>
+                </td>
+                <td>
+
+                     <form method="post" asp-controller="User" asp-action="GetUserInfo" asp-route-index="@item.Index">
+                        <input type="submit" value="Donate" />
+                    </form>
+
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
