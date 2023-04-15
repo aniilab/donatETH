@@ -42,7 +42,7 @@ body {
         border: 8px solid #000;
         border-radius: 50%;
         animation: loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: #000 transparent transparent transparent;
+        border-color: #4b345f transparent transparent transparent;
     }
 
         .loading div:nth-child(1) {
@@ -68,3 +68,152 @@ body {
 }
 
 
+.mycard {
+    width: 17rem;
+    height: 25rem;
+    cursor: pointer;
+    border: none;
+}
+
+.content {
+    text-align: center;
+    text-decoration-color: #ffffff;
+    color: aliceblue;
+    position: relative;
+    transition: all 2.25s;
+    background: rgb(224,174,238);
+    background: radial-gradient(circle, rgba(224,174,238,1) 0%, rgba(148,164,233,1) 100%);
+    padding: 5em;
+    transform-style: preserve-3d;
+    height: inherit;
+    border-radius: 50px;
+    position: relative;
+}
+
+.mycard:hover .content {
+    transform: rotateY(0.5turn);
+}
+.front {
+    border-radius: 50px;
+
+}
+.front,
+.back {
+    position: absolute;
+    border-radius: 50px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 2em;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.title {
+    transform: translateZ(5rem);
+    font-size: 2rem;
+    position: relative
+}
+
+.subtitle {
+    transform: translateZ(2rem);
+    position: relative
+}
+
+.back {
+    transform: rotateY(0.5turn);
+    background-color: #94a4e9;
+    border-radius: 50px;
+    color: black;
+}
+
+.description {
+    transform: translateZ(3rem);
+}
+
+
+.cards-table{
+    display:flex;
+    flex-direction:row;
+}
+.card {
+    width: 252px;
+    height: 266px;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+    transition: 0.2s ease-in-out;
+    margin:10px 10px;
+}
+
+.card:hover {
+    cursor: pointer;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-body {
+    width:100%;
+    height:50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-family: 'Lucida Sans' sans-serif;
+    font-size: 12px;
+    color: black;
+}
+
+.card-price {
+    font-family: 'Lucida Sans' sans-serif;
+    font-size: 4px;
+    color: rgba(0,0,0,0.1);
+    font-style:italic;
+}
+
+progress {
+    width: 100%; 
+    height: 20px; /* Товщина progress bar */
+    -webkit-appearance: none; /* Заборонити стилі за замовчуванням веб-переглядача */
+    appearance: none;
+}
+
+    progress::-webkit-progress-bar {
+        background-color: aliceblue; /* Колір фону progress bar */
+        border-radius: 30px; /* Заокруглення кутів progress bar */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset; /* Тінь всередині progress bar */
+    }
+
+    progress::-webkit-progress-value {
+        background-color: rgb(86, 103, 178); /* Колір заповнення progress bar */
+        border-radius: 30px; /* Заокруглення кутів заповнення progress bar */
+    }
+
+.button-glow {
+    padding: 17px 40px;
+    border-radius: 50px;
+    border: 0;
+    background-color: rgb(86, 103, 178);
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease;
+    color:aliceblue;
+}
+
+    .button-glow:hover {
+        letter-spacing: 3px;
+        background-color: hsl(261deg 80% 48%);
+        color: hsl(0, 0%, 100%);
+    }
+
+    .button-glow:active {
+        letter-spacing: 3px;
+        background-color: hsl(261deg 80% 48%);
+        color: hsl(0, 0%, 100%);
+        box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+        transform: translateY(10px);
+        transition: 100ms;
+    }

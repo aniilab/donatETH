@@ -12,11 +12,12 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="../logo.png" alt="Logo"/></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Posts" asp-action="Index"><img src="https://lh3.googleusercontent.com/LjeaqPHQFbiM3doozMN_EMMSVkXir7E7cirJjot1Mna6EV6npAefcr-bz7F3tq07dYyT-tQKWbMA9sDH9f1L8WGGQ9lbeQxbt1iL0a8uTRjsfiseKxSLHC19QRSdNqxb9VGEcL3ezYDF-9Ua-Ju-AsObQtrh5Gp_8C5GX7sdq5nX5WptBHfcEI7nhXHry6O-IpogVCp5oc5VPcvxQRoNWJU5DHxH8_cfGCOuxWtKsxl1wzXZ8ObkvXC6F67ps0Sz8tHxcvB02iX_OYetvhTToh7GvoIxC_1K7APNCXRSzh3PsTzx1-DyuHALm4yWipcGqqasxNHURqCgUZXM-vjxMmgb3j13WalWIdptjIQKwZVZ4VUK_CtKFpRf_hbe0Jj2NArylIdMdx74-JaIzY9wWxbwWlH1eaneGf45CIWmkGUIb56_LNB_j-lk6LCQyHWU7wdOmw3R515aaqi94TGCro5eHIg5zTKfLWV3Y9uCVexpuVB1CTEtm2sbNuNGaaUpZCl0fUJ0hxlZXmXIivoE-PMSbz11-ZPFBuFWB4nXtJxcOATyq5HZuBnRd9a7qSbXzD_5RYQbc_XeQKX5ZV4rWscHXmeE0TSajpOp_U8HMwAXz-eTh4rj-G47j8s8PTvAXFJZEkcVNE6-T55gebjy1kRxveToDK0hvHpNvdqoPzY_J3VQ-sHRE-3CE7kW3rwitrPDR0RBD73te2fdjBQZs_BGzSPNuvzxRECHoYddvuMEJ8vlymXzqA6noup7plpb9sR3jrgaQ5uXeySL8_C8Uzy0ZZUcs_RZTokQuv2_rgHmLr56Nw6KSyB-pcpVSVyVU54gBMU0okQL6FBAdC20PF4cEOojnCp4s6reIZftTS3aEmnLfEn3XveMfJrs9KKAhRew8t-2mDageMll6SVblpCBaAYbUlbK0f22UDFhzJi3iSZUqZfaFoI7Kl34KoBYJgDtMqmU0fK4Nn66tX4=w400-h100-s-no?authuser=0" alt="Logo" width="300x"/></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -25,6 +26,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                    </ul>
+
+                     <ul class="navbar-nav flex-grow-2">
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Posts" asp-action="Create">
+                                    <input type="button" class="button-glow" value="Create new charity raising" />
+                                </form>
+                            </li>
                     </ul>
                 </div>
             </div>

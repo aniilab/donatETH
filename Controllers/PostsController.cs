@@ -58,6 +58,12 @@ namespace donatETH.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Donate(int index)
+        {
+            await PostContractService.DonateById(index);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
 

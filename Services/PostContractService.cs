@@ -14,9 +14,8 @@ namespace donatETH.Services
     public static class PostContractService
     {
         private static string endPoint = "https://rpc.sepolia.org/";
-        private static string contractAddress = "0x122e5C29729C13A5f9609a312E8863997041f961";
-        private static string contractAbi = @"
-[
+        private static string contractAddress = "0x1C35bFD8432d8cd212f435AB8D48f1344143DA78";
+		private static string contractAbi = @"[
 	{
 		""inputs"": [
 			{
@@ -91,7 +90,7 @@ namespace donatETH.Services
 		],
 		""name"": ""donate"",
 		""outputs"": [],
-		""stateMutability"": ""payable"",
+		""stateMutability"": ""nonpayable"",
 		""type"": ""function""
 	},
 	{
@@ -238,9 +237,7 @@ namespace donatETH.Services
 		""stateMutability"": ""view"",
 		""type"": ""function""
 	}
-]
-";
-
+]";
 
 		private static string privateKey = "e652bdb841aca1d2d64c957b0a5f1ab27d0a7db8a28c4ff226064e31779c901c";
 
@@ -334,25 +331,15 @@ namespace donatETH.Services
 			return result;
 		}
 
-		public static async Task DonateById(UserInfo info)
+		public static async Task DonateById(int id)
 		{
 			var donateFunction = contract.GetFunction("donate");
-			BigInteger index = info.PostId;
+			BigInteger index = id;
 
-			var userAddress = info.Address;
-			var post = await GetPostAsync(info.PostId);
-			var price = post.Price;
-			var transactionInput = new TransactionInput()
-			{
-				To = contractAddress,
-				Value = new HexBigInteger(price),
-				From = userAddress // передача адреси користувача
-			};
+			var gas = await donateFunction.EstimateGasAsync(index);
 
-			var gas = new HexBigInteger(2000000000);
-			await donateFunction.SendTransactionAndWaitForReceiptAsync(userAddress, gas, null, null, index);
-			//return RedirectToAction("PostDetails", new { postId });
-			//return receipt;
+			var transactionInput = donateFunction.CreateTransactionInput(account.Address, gas, null, index);
+			var result = await web.Eth.TransactionManager.SendTransactionAsync(transactionInput);
 		}
 
 

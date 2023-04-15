@@ -8,6 +8,9 @@
 
 <h4>Fill in your info</h4>
 <hr />
+
+    <table class="Form">
+        <td>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -39,14 +42,61 @@
             </div>
             <div class="form-group">
                 <label asp-for="Creator" class="control-label"></label>
-                <input asp-for="Creator" value="" class="form-control" />
-                <span asp-validation-for="Creator" class="text-danger"></span>
+                <button type="button" onClick="connectWallet()">Connect wallet</button>
+                <p id="address"></p>
+                <input id="creatorInput" type="hidden" asp-for="Creator" value="" />
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
             </div>
         </form>
     </div>
+    
 </div>
+</td>
+<td>
+ <div class="mycard">
+    
+       <div class="content">
+           <div class="front">
+               <h3 class="title">Rules for a new post</h3>
+               <p class="subtitle">Hover to read</p>
+           </div>
+           <div class="back">
+               <p class="description">
+                   <div>1. All fields are required.</div>
+                   <div>2. You will not be able to edit them later. Fill in wisely ;)</div>
+                   <div>3. Your price should not be bigger than your goal amount.</div>
+                   <div>4. Your goal amount should be multiple of your price.</div>
+                   <div>5. Connect your wallet before adding a post.</div>
+                   <div>6. Use image URL, otherwise image will not be shown on the site.</div>
+               </p>
+           </div>
+       </div>
+   </div>
+   </td>
+   </table>   
+<script src="https://c0f4f41c-2f55-4863-921b-sdk-docs.github.io/cdn/metamask-sdk.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
+
+<script>
+    let accounts = {};
+       async function connectWallet(){
+           if(Object.keys(accounts).length == 0) {
+               accounts = await window.ethereum.request({ method: "eth_requestAccounts" }).catch((err) => {
+             //TODO
+            console.log(err.code);
+            })
+            document.getElementById('address').innerHTML = accounts[0];
+            document.getElementById('creatorInput').value = accounts[0];
+            }
+            else{
+                document.getElementById('address').innerHTML = accounts[0];
+            document.getElementById('creatorInput').value = accounts[0];
+            }
+
+       }
+</script>
 
 
