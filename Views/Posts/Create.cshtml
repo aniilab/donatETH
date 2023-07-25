@@ -1,102 +1,182 @@
 ﻿@model donatETH.Models.Post
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create new charity";
 }
 
-<h1>Add new charity collection</h1>
 
-<h4>Fill in your info</h4>
-<hr />
 
-    <table class="Form">
-        <td>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
-                <span asp-validation-for="Text" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Goal" class="control-label"></label>
-                <input asp-for="Goal" value="" class="form-control" />
-                <span asp-validation-for="Goal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Creator" class="control-label"></label>
-                <button type="button" onClick="connectWallet()">Connect wallet</button>
-                <p id="address"></p>
-                <input id="creatorInput" type="hidden" asp-for="Creator" value="" />
-
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-    
+ <div class="submit-progress hidden" >
+     <label><div style="height:500px; width:100%; display:flex; align-content:center; align-items:center; justify-content:center;">
+ <div class="three-body">
+<div class="three-body__dot"></div>
+<div class="three-body__dot"></div>
+<div class="three-body__dot"></div>
 </div>
-</td>
-<td>
- <div class="mycard">
-    
-       <div class="content">
-           <div class="front">
-               <h3 class="title">Rules for a new post</h3>
-               <p class="subtitle">Hover to read</p>
-           </div>
-           <div class="back">
-               <p class="description">
-                   <div>1. All fields are required.</div>
-                   <div>2. You will not be able to edit them later. Fill in wisely ;)</div>
-                   <div>3. Your price should not be bigger than your goal amount.</div>
-                   <div>4. Your goal amount should be multiple of your price.</div>
-                   <div>5. Connect your wallet before adding a post.</div>
-                   <div>6. Use image URL, otherwise image will not be shown on the site.</div>
-               </p>
-           </div>
-       </div>
+</div></label>
    </div>
-   </td>
-   </table>   
+
+<div id="result" class="create-form">
+            <form class="create-section" asp-action="Create">
+                 <h1 class="description" style="color:black; margin-bottom:10px;">Fill in the information about the charity</h1>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <button 
+                    id="connect"
+                    @*onClick="connectWallet(event)" *@
+                    class="connect-button">
+                    <div class="svg-wrapper-1">
+                        <div class="svg-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 240"><path fill="#E17726" d="M250.066 0L140.219 81.279l20.427-47.9z"/><path fill="#E27625" d="m6.191.096l89.181 33.289l19.396 48.528zM205.86 172.858l48.551.924l-16.968 57.642l-59.243-16.311zm-155.721 0l27.557 42.255l-59.143 16.312l-16.865-57.643z"/><path fill="#E27625" d="m112.131 69.552l1.984 64.083l-59.371-2.701l16.888-25.478l.214-.245zm31.123-.715l40.9 36.376l.212.244l16.888 25.478l-59.358 2.7zM79.435 173.044l32.418 25.259l-37.658 18.181zm97.136-.004l5.131 43.445l-37.553-18.184z"/><path fill="#D5BFB2" d="m144.978 195.922l38.107 18.452l-35.447 16.846l.368-11.134zm-33.967.008l-2.909 23.974l.239 11.303l-35.53-16.833z"/><path fill="#233447" d="m100.007 141.999l9.958 20.928l-33.903-9.932zm55.985.002l24.058 10.994l-34.014 9.929z"/><path fill="#CC6228" d="m82.026 172.83l-5.48 45.04l-29.373-44.055zm91.95.001l34.854.984l-29.483 44.057zm28.136-44.444l-25.365 25.851l-19.557-8.937l-9.363 19.684l-6.138-33.849zm-148.237 0l60.435 2.749l-6.139 33.849l-9.365-19.681l-19.453 8.935z"/><path fill="#E27525" d="m52.166 123.082l28.698 29.121l.994 28.749zm151.697-.052l-29.746 57.973l1.12-28.8zm-90.956 1.826l1.155 7.27l2.854 18.111l-1.835 55.625l-8.675-44.685l-.003-.462zm30.171-.101l6.521 35.96l-.003.462l-8.697 44.797l-.344-11.205l-1.357-44.862z"/><path fill="#F5841F" d="m177.788 151.046l-.971 24.978l-30.274 23.587l-6.12-4.324l6.86-35.335zm-99.471 0l30.399 8.906l6.86 35.335l-6.12 4.324l-30.275-23.589z"/><path fill="#C0AC9D" d="m67.018 208.858l38.732 18.352l-.164-7.837l3.241-2.845h38.334l3.358 2.835l-.248 7.831l38.487-18.29l-18.728 15.476l-22.645 15.553h-38.869l-22.63-15.617z"/><path fill="#161616" d="m142.204 193.479l5.476 3.869l3.209 25.604l-4.644-3.921h-36.476l-4.556 4l3.104-25.681l5.478-3.871z"/><path fill="#763E1A" d="M242.814 2.25L256 41.807l-8.235 39.997l5.864 4.523l-7.935 6.054l5.964 4.606l-7.897 7.191l4.848 3.511l-12.866 15.026l-52.77-15.365l-.457-.245l-38.027-32.078zm-229.628 0l98.326 72.777l-38.028 32.078l-.457.245l-52.77 15.365l-12.866-15.026l4.844-3.508l-7.892-7.194l5.952-4.601l-8.054-6.071l6.085-4.526L0 41.809z"/><path fill="#F5841F" d="m180.392 103.99l55.913 16.279l18.165 55.986h-47.924l-33.02.416l24.014-46.808zm-104.784 0l-17.151 25.873l24.017 46.808l-33.005-.416H1.631l18.063-55.985zm87.776-70.878l-15.639 42.239l-3.319 57.06l-1.27 17.885l-.101 45.688h-30.111l-.098-45.602l-1.274-17.986l-3.32-57.045l-15.637-42.239z"/></svg>
+                        </div>
+                    </div>
+                <span id="walletAddress" style="display: none;"></span>
+                <span>Connect wallet</span>
+                </button>
+
+
+                <input id="creatorInput" asp-validation-for="Creator" type="hidden" asp-for="Creator" />
+
+
+
+
+             @*   <button id="walletButton" type="button" onClick="connectWallet() class="connect-button">
+                        <img id="metamaskLogo" src="https://metamask.io/images/favicon-32x32.png" alt="MetaMask logo" style="display: none;">
+                        <span id="walletAddress" style="display: none;"></span>
+                        Connect Wallet
+                    </button>
+                    <input id="creatorInput" asp-validation-for="Creator" type="hidden" asp-for="Creator" />*@
+
+                
+                    <label>
+                    <input required="" placeholder="" asp-for="Title"type="text"  class="input">
+                    <span>Title</span>
+                </label>
+                <label>
+                     <input required="" placeholder="" asp-for="Text"type="text" class="input">
+                     <span asp-validation-for="Text">Description</span>
+                </label>
+                  <label>
+                     <input required="" placeholder="" asp-for="ImageUrl"type="url" class="input">
+                     <span asp-validation-for="ImageUrl">Your image URL</span>
+                </label>
+
+                <div class="flex">
+                  <label>
+                     <input required="" placeholder="" asp-for="Price"type="number" class="input" value="">
+                     <span asp-validation-for="Price">Price of donate (in Gwei)</span>
+                </label>
+                  <label>
+                     <input required="" placeholder="" asp-for="Goal" type="number" class="input" value="">
+                     <span asp-validation-for="Goal">Goal amount (in Gwei)</span>
+                </label>
+                </div>
+                
+                <div class="form-group">
+                         <input type="submit" onclick='DisplayProgressMessage(this)' class="submit" value="Submit" />
+                </div>
+            </form>
+
+    <div class="description-section">
+        <h1 class="description">Rules for creating new charity raising:</h1>
+        <span class="description">
+            <div>• All fields are required.</div>
+            <div>• You will not be able to edit them later. Fill in wisely ;)</div>
+            <div>• Your price should not be bigger than your goal amount.</div>
+            <div>• Your goal amount should be multiple of your price.</div>
+            <div>• Connect your wallet before adding a post.</div>
+            <div>• Use image URL, otherwise image will not be shown on the site.</div>
+        </span>
+    </div>
+    </div>
+</div>
+
 <script src="https://c0f4f41c-2f55-4863-921b-sdk-docs.github.io/cdn/metamask-sdk.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
+<script defer>
     let accounts = {};
-       async function connectWallet(){
-           if(Object.keys(accounts).length == 0) {
-               accounts = await window.ethereum.request({ method: "eth_requestAccounts" }).catch((err) => {
-             //TODO
-            console.log(err.code);
-            })
-            document.getElementById('address').innerHTML = accounts[0];
-            document.getElementById('creatorInput').value = accounts[0];
-            }
-            else{
-                document.getElementById('address').innerHTML = accounts[0];
-            document.getElementById('creatorInput').value = accounts[0];
-            }
 
-       }
+    document.getElementById('connect').addEventListener(
+    'click', connectWallet);
+
+
+    async function connectWallet (event) {
+        event.preventDefault()
+       
+        try {
+            accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            //document.getElementById('walletAddress').innerText = accounts[0];
+             this.innerHTML = accounts[0]
+            //alert(accounts)
+
+            document.getElementById('creatorInput').value = accounts[0];
+            //document.getElementById('metamaskLogo').style.display = 'inline';
+            //document.getElementById('walletAddress').style.display = 'inline';
+            //document.getElementById('walletButton').innerText = '';
+            document.getElementById('connect');
+            document.getElementById('connect').value ='connected';
+        } catch (err) {
+            console.log(err.code);
+            // Обробка помилки
+        }
+    } 
+    
+    window.onload = async function checkWalletConnected() {
+        if (window.ethereum) {
+            try {
+                const accounts = await window.ethereum.request({ method: "eth_accounts" });
+
+                if (accounts.length > 0) {
+                    document.getElementById('walletAddress').innerText = accounts[0];
+                    document.getElementById('metamaskLogo').style.display = 'inline';
+                    document.getElementById('walletAddress').style.display = 'inline';
+                    document.getElementById('walletButton').innerText = '';
+                    document.getElementById('creatorInput').value = accounts[0];
+                } else {
+                    document.getElementById('walletButton').innerText = 'Connect Wallet';
+                    document.getElementById('walletButton').style="connect-button";
+                }
+            } catch (err) {
+                console.log(err);
+                // Обробка помилки
+            }
+        }
+    }
+
+    function DisplayProgressMessage(ctl) {
+
+        //document.getElementById('submitProgress').style.display = 'inline'
+
+        document.getElementById('result').style.display = 'none'
+        //if use the submit button, you can use event.preventDefault to prevent the default submit form behavior.
+        event.preventDefault();
+        // Turn off the "Save" button and change text
+        $(ctl).prop("disabled", true).val("Creating ...");
+        // Gray out background on page
+        $("body").addClass("submit-progress-bg");    
+        // Wrap in setTimeout so the UI can update the spinners
+        $(".submit-progress").removeClass("hidden");
+        //submit the form.
+
+         setTimeout(function () {
+            //window.location.href = '@Url.Action("Index", "Posts")';
+        }, 15000);
+         setTimeout(function () {
+            $("form").submit(); 
+        }, 1);    
+        return true;
+    }
+
+
+     function redirect () {
+          }
+
+   
 </script>
+
+
 
 

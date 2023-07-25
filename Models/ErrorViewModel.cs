@@ -1,4 +1,4 @@
-namespace donatETH.Models
+﻿namespace donatETH.Models
 {
     public class ErrorViewModel
     {

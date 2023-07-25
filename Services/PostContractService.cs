@@ -8,14 +8,20 @@ using Nethereum.RPC.Eth.DTOs;
 using Coinbase.Commerce;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace donatETH.Services
 {
     public static class PostContractService
     {
         private static string endPoint = "https://rpc.sepolia.org/";
+
+		private static string privateKey = "e652bdb841aca1d2d64c957b0a5f1ab27d0a7db8a28c4ff226064e31779c901c";
+
+        private static readonly Account account = new Account(privateKey);
+        private static readonly Web3 web = new Web3(account, endPoint);
         private static string contractAddress = "0x1C35bFD8432d8cd212f435AB8D48f1344143DA78";
-		private static string contractAbi = @"[
+        private static string contractAbi = @"[
 	{
 		""inputs"": [
 			{
@@ -239,14 +245,10 @@ namespace donatETH.Services
 	}
 ]";
 
-		private static string privateKey = "e652bdb841aca1d2d64c957b0a5f1ab27d0a7db8a28c4ff226064e31779c901c";
-
-        private static readonly Account account = new Account(privateKey);
-        private static readonly Web3 web = new Web3(account, endPoint);
         private static Contract contract = web.Eth.GetContract(contractAbi, contractAddress);
 
 
-        public static async Task AddPostAsync(Post newpost)
+        public static async Task<string> AddPostAsync(Post newpost)
         {
 			PostInDTO postInDTO = new PostInDTO() { 
 				Title = newpost.Title,
@@ -269,8 +271,12 @@ namespace donatETH.Services
 				postInDTO.Price,
 				postInDTO.Goal);
 
-			await web.Eth.TransactionManager.SendTransactionAsync(transactionInput);
+
+
+            return await web.Eth.TransactionManager.SendTransactionAsync(transactionInput);
         }
+
+
 
         public static async Task<Post> GetPostAsync(int i)
         {
@@ -312,7 +318,6 @@ namespace donatETH.Services
 			var addLikeFunction = contract.GetFunction("addLike");
 			BigInteger index = Id;
 			var gas = await addLikeFunction.EstimateGasAsync(index);
-			//var gas = new HexBigInteger(2000000000);
 
 			var transactionInput = addLikeFunction.CreateTransactionInput(account.Address, gas, null, index);
 			var result = await web.Eth.TransactionManager.SendTransactionAsync(transactionInput);
@@ -324,7 +329,6 @@ namespace donatETH.Services
 			var removeLikeFunction = contract.GetFunction("removeLike");
 			BigInteger index = Id;
 			var gas = await removeLikeFunction.EstimateGasAsync(index);
-			//var gas = new HexBigInteger(2000000000);
 
 			var transactionInput = removeLikeFunction.CreateTransactionInput(account.Address, gas, null, index);
 			var result = await web.Eth.TransactionManager.SendTransactionAsync(transactionInput);

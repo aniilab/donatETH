@@ -6,6 +6,7 @@ using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
 using donatETH.Models;
 using donatETH.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace donatETH.Controllers
 {
@@ -24,19 +25,38 @@ namespace donatETH.Controllers
             return View(posts);
             
         }
+        public async Task<IActionResult> Details(int id)
+        {   
+            var post = await PostContractService.GetPostAsync(id);
+            return View(post);
+        }
 
         public IActionResult Create()
         {
             return View();
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Loading()
+        {
+            return RedirectToAction("Loading", "Home");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Text,ImageUrl,Creator,Price,Goal")] Post post)
+        public async Task<IActionResult> Create(Post post)
         {
-
             if (ModelState.IsValid)
             {
-                await PostContractService.AddPostAsync(post);
+
+                var task = PostContractService.AddPostAsync(post);
+
+                while (!task.IsCompleted)
+                {
+
+                }
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -61,7 +81,7 @@ namespace donatETH.Controllers
         public async Task<IActionResult> Donate(int index)
         {
             await PostContractService.DonateById(index);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details));
         }
 
     }

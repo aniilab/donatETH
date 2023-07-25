@@ -1,0 +1,27 @@
+﻿<script>
+    document.getElementById("header1").style.display="none";
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        // Оновити сторінку після завершення транзакції
+        setTimeout(function () {
+            window.location.href = '@Url.Action("Index", "Posts")';
+        }, 15000); // Змініть значення 15000 на бажану затримку оновлення (у мілісекундах)
+    });
+</script>
+
+<!DOCTYPE html>
+<html>
+
+<div style="height:500px; width:100%; display:flex; align-content:center; align-items:center; justify-content:center;">
+ <div class="three-body">
+<div class="three-body__dot"></div>
+<div class="three-body__dot"></div>
+<div class="three-body__dot"></div>
+</div>
+</div>
+</html>
+
+
